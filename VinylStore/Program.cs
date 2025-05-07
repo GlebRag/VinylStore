@@ -1,7 +1,18 @@
+using VinylStore.Data.Repositories;
+using VinylStore.Data;
+using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CONNECTION_STRING));
+
+builder.Services.AddScoped<IVinylRepositoryReal, VinylRepository>();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
